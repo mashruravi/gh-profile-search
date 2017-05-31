@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GithubService } from "app/github.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,25 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+
+  user: object;
+  repos: any[];
+  username: string;
+
+  constructor(private _githubService: GithubService) {
+
+  }
+
+  search() {
+
+    this._githubService.setUser(this.username);
+
+    this._githubService.getUser()
+      .subscribe(res => this.user = res);
+
+    this._githubService.getUserRepos()
+      .subscribe(res => this.repos = res);
+
+  }
+
 }
