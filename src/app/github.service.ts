@@ -12,9 +12,14 @@ export class GithubService {
   private url: string;
 
   constructor(private _http: Http) {
-    this.username = 'mashruravi';
-    this.clientid = '<client_id>';
-    this.clientsecret = '<client_secret>';
+
+    // Load client id and client secret from secret.json
+    this._http.get('assets/secret.json')
+      .map((res) => res.json())
+      .subscribe((data) => {
+        this.clientid = data.clientid;
+        this.clientsecret = data.clientsecret;
+      });
   }
 
   private getUrl(): string {
